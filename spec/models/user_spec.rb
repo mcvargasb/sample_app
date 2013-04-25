@@ -1,4 +1,4 @@
-# == Schema Information
+	# == Schema Information
 #
 # Table name: users
 #
@@ -61,6 +61,15 @@ describe "when email format is invalid" do
         @user.email = valid_address
         @user.should be_valid
       end      
+    end
+  end
+  describe "email address with mixed case" do
+    let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
+
+    it "should be saved as all lower-case" do
+      @user.email = mixed_case_email
+      @user.save
+      @user.reload.email.should == mixed_case_email.downcase
     end
   end
 
